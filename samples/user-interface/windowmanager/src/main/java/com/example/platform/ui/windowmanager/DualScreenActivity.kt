@@ -1,17 +1,13 @@
 /*
- * Copyright 2023 The Android Open Source Project
+ * 版权所有 2023 The Android Open Source Project
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * 根据 Apache 许可证 2.0 版（“许可证”）授权，除非遵守许可证，否则你不得使用此文件。
+ * 你可以在以下网址获得许可证副本：
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 除非适用法律要求或书面同意，按许可证分发的软件按“原样”分发，
+ * 不附带任何明示或暗示的担保或条件。请参阅许可证了解管理权限和限制的具体语言。
  */
 
 package com.example.platform.ui.windowmanager
@@ -76,11 +72,10 @@ class DualScreenActivity : AppCompatActivity(), WindowAreaPresentationSessionCal
     }
 
     private fun toggleDualScreenMode() {
-        //here we are not checking the status because of b/302183399
-        if(windowAreaSession != null) {
+        //这里我们没有检查状态，因为 b/302183399
+        if (windowAreaSession != null) {
             windowAreaSession?.close()
-        }
-        else {
+        } else {
             windowAreaInfo?.token?.let { token ->
                 windowAreaController.presentContentOnWindowArea(
                     token = token,
@@ -110,50 +105,49 @@ class DualScreenActivity : AppCompatActivity(), WindowAreaPresentationSessionCal
     }
 
     private fun updateUI() {
-        if(windowAreaSession != null) {
+        if (windowAreaSession != null) {
             binding.button.isEnabled = true
-            binding.status.text = "Disable Dual Screen Mode"
+            binding.status.text = "禁用双屏模式"
         } else {
-            when(capabilityStatus) {
+            when (capabilityStatus) {
                 WindowAreaCapability.Status.WINDOW_AREA_STATUS_UNSUPPORTED -> {
                     binding.button.isEnabled = false
-                    binding.status.text = "Dual Screen is not supported on this device"
+                    binding.status.text = "此设备不支持双屏"
                 }
                 WindowAreaCapability.Status.WINDOW_AREA_STATUS_UNAVAILABLE -> {
                     binding.button.isEnabled = false
-                    binding.status.text = "Dual Screen is not currently available"
+                    binding.status.text = "双屏当前不可用"
                 }
                 WindowAreaCapability.Status.WINDOW_AREA_STATUS_AVAILABLE -> {
                     binding.button.isEnabled = true
-                    binding.status.text = "Enable Dual Screen Mode"
+                    binding.status.text = "启用双屏模式"
                 }
                 else -> {
                     binding.button.isEnabled = false
-                    binding.status.text = "Dual Screen status is unknown"
+                    binding.status.text = "双屏状态未知"
                 }
             }
         }
     }
 
     override fun onSessionStarted(session: WindowAreaSessionPresenter) {
-        infoLogAdapter.append(getCurrentTimeString(), "Presentation session has been started")
+        infoLogAdapter.append(getCurrentTimeString(), "演示会话已开始")
         windowAreaSession = session
         val view = TextView(session.context)
-        view.text = "Hello world, from the other screen!"
+        view.text = "你好世界，从另一个屏幕问候！"
         session.setContentView(view)
         updateUI()
     }
 
     override fun onSessionEnded(t: Throwable?) {
-        if(t != null) {
-            Log.e(logTag, "Something was broken: ${t.message}")
+        if (t != null) {
+            Log.e(logTag, "出现错误: ${t.message}")
         }
-        infoLogAdapter.append(getCurrentTimeString(), "Presentation session has been ended")
+        infoLogAdapter.append(getCurrentTimeString(), "演示会话已结束")
         windowAreaSession = null
     }
 
     override fun onContainerVisibilityChanged(isVisible: Boolean) {
-        infoLogAdapter.append(getCurrentTimeString(), "Presentation content is visible: $isVisible")
+        infoLogAdapter.append(getCurrentTimeString(), "演示内容是否可见: $isVisible")
     }
-
 }

@@ -1,32 +1,25 @@
-# Location samples
+# 位置示例
 
-The samples in this directory address various scenarios of building location aware apps
-- [Location Permissions](src/main/java/com/example/platform/location/permission/LocationPermissionsScreen.kt)
-- [Get Current Location](src/main/java/com/example/platform/location/currentLocation/CurrentLocationScreen.kt)
-- [Receive Location Updates](src/main/java/com/example/platform/location/locationupdates/LocationUpdatesScreen.kt)
-- [Background Location Access](src/main/java/com/example/platform/location/bglocationaccess/BgLocationAccessScreen.kt)
-- [Create and Monitor Geofences](src/main/java/com/example/platform/location/geofencing/GeofencingScreen.kt)
-- [User Activity Recognition](src/main/java/com/example/platform/location/useractivityrecog/UserActivityRecognitionScreen.kt)
+本目录中的示例涉及构建位置感知应用的各种场景
+- [位置权限](src/main/java/com/example/platform/location/permission/LocationPermissionsScreen.kt)
+- [获取当前位置](src/main/java/com/example/platform/location/currentLocation/CurrentLocationScreen.kt)
+- [接收位置更新](src/main/java/com/example/platform/location/locationupdates/LocationUpdatesScreen.kt)
+- [后台位置访问](src/main/java/com/example/platform/location/bglocationaccess/BgLocationAccessScreen.kt)
+- [创建和监控地理围栏](src/main/java/com/example/platform/location/geofencing/GeofencingScreen.kt)
+- [用户活动识别](src/main/java/com/example/platform/location/useractivityrecog/UserActivityRecognitionScreen.kt)
 
-> **Important:** All samples run independent of each other.
+> **重要：** 所有示例都可以独立运行。
 
-These samples showcase the use case in a simplified manner. For more details on how to build location
-aware apps please refer https://developer.android.com/training/location
+这些示例以简化的方式展示了用例。有关如何构建位置感知应用的更多详细信息，请参阅 https://developer.android.com/training/location
 
-## License
+## 许可证
 
 ```
-Copyright 2022 The Android Open Source Project
+版权所有 2022 The Android Open Source Project
  
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+根据 Apache 许可证 2.0 版（“许可证”）授权，除非遵守许可证，否则你不得使用此文件。你可以在以下网址获得许可证副本：
 
     https://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+除非适用法律要求或书面同意，按许可证分发的软件按“原样”分发，不附带任何明示或暗示的担保或条件。请参阅许可证了解管理权限和限制的具体语言。
 ```

@@ -1,82 +1,66 @@
-![Build](https://github.com/android/platform-samples/actions/workflows/build.yml/badge.svg)
+![构建](https://github.com/android/platform-samples/actions/workflows/build.yml/badge.svg)
 
-# Android Platform Samples
+# Android 平台示例
 
-This repository contains a collection of samples that demonstrate the use of different Android OS platform APIs. The samples are organized into folders by topic, and each folder contains a README file that provides more information about the samples in that folder.
+本仓库包含一系列示例，展示了不同 Android 操作系统平台 API 的使用。示例按主题组织到文件夹中，每个文件夹包含一个 README 文件，提供有关该文件夹中示例的更多信息。
 
-> **Note:** These samples are intended to showcase specific functionality in isolation, and they may use
-> simplified code. They are not intended to be used as production-ready code. The project uses the
-> [casa-android](https://github.com/google/casa-android) (intended only for demo projects).
-> For best practices follow our documentation and check
-> [Now In Android](https://github.com/android/nowinandroid)
+> **注意：** 这些示例旨在独立展示特定功能，可能使用了简化的代码。它们并不适用于生产环境代码。项目使用 [casa-android](https://github.com/google/casa-android)（仅用于演示项目）。有关最佳实践，请遵循我们的文档并查看 [Now In Android](https://github.com/android/nowinandroid)。
 
-Browse the samples inside each topic samples folder:
+浏览每个主题示例文件夹中的示例：
 
-- [Accessibility](https://github.com/android/platform-samples/tree/main/samples/accessibility)
-- [Camera](https://github.com/android/platform-samples/tree/main/samples/camera)
-- [Connectivity](https://github.com/android/platform-samples/tree/main/samples/connectivity)
-- [Graphics](https://github.com/android/platform-samples/tree/main/samples/graphics)
-- [Location](https://github.com/android/platform-samples/tree/main/samples/location)
-- [Privacy](https://github.com/android/platform-samples/tree/main/samples/privacy)
-- [Storage](https://github.com/android/platform-samples/tree/main/samples/storage)
-- [User-interface](https://github.com/android/platform-samples/tree/main/samples/user-interface)
-- More to come...
+- [无障碍（Accessibility）](https://github.com/android/platform-samples/tree/main/samples/accessibility)
+- [相机（Camera）](https://github.com/android/platform-samples/tree/main/samples/camera)
+- [连接（Connectivity）](https://github.com/android/platform-samples/tree/main/samples/connectivity)
+- [图形（Graphics）](https://github.com/android/platform-samples/tree/main/samples/graphics)
+- [位置（Location）](https://github.com/android/platform-samples/tree/main/samples/location)
+- [隐私（Privacy）](https://github.com/android/platform-samples/tree/main/samples/privacy)
+- [存储（Storage）](https://github.com/android/platform-samples/tree/main/samples/storage)
+- [用户界面（User-interface）](https://github.com/android/platform-samples/tree/main/samples/user-interface)
+- 更多内容即将推出...
 
-We are constantly adding new samples to this repository. You can find a list of all the available samples [here](https://github.com/android/platform-samples/tree/main/samples/README.md).
+我们不断向该仓库添加新的示例。你可以在[这里](https://github.com/android/platform-samples/tree/main/samples/README.md)找到所有可用示例的列表。
 
-> 🚧 **Work-in-Progress:** we are working on bringing more existing and new samples into this format.
+> 🚧 **进行中的工作：** 我们正在努力将更多现有和新示例引入这种格式。
 
-## How to run
+## 如何运行
 
-1. Clone the repository
-2. Open the whole project in Android Studio.
-3. Sync & Run `app` configuration
+1. 克隆仓库
+2. 在 Android Studio 中打开整个项目。
+3. 同步并运行 `app` 配置
 
-The app will open with the samples list screen that allows you to navigate throughout the different
-categories and available samples.
+应用将打开示例列表屏幕，允许你浏览不同类别和可用示例。
 
-> **Note:** the `app` module is required to bring together all the samples but it's not relevant
-> for their functionality, you can simply ignore it. The wiring is done under the hood and an
-> implementation detail not needed to understand any sample functionality.
+> **注意：** `app` 模块用于汇总所有示例，但与其功能无关，可以忽略它。底层实现已完成，不需要理解任何示例功能。
 
-### Deeplink to sample
+### 深链接到示例
 
-To open a specific sample directly you can use one of the auto-generated configurations.
+要直接打开特定示例，可以使用自动生成的配置之一。
 
-1. Build the project at least once
-2. Open `Run Configuration` dropdown
-3. Select sample name
-4. Run
+1. 至少构建项目一次
+2. 打开 `Run Configuration` 下拉菜单
+3. 选择示例名称
+4. 运行
 
-> **Tip:** use `⌃⌥R` or `Alt+Shift+F10` shortcut to open the full list and launch the selected one. 
+> **提示：** 使用 `⌃⌥R` 或 `Alt+Shift+F10` 快捷键打开完整列表并启动所选项。
 
-## Reporting Issues
+## 报告问题
 
-You can report an [issue with a sample](https://github.com/android/platform-samples/issues) using
-this repository. When doing so, make sure to specify which sample you are referring to.
+你可以使用[此仓库报告示例问题](https://github.com/android/platform-samples/issues)。在这样做时，请确保指定你所指的示例。
 
-## Contributions
+## 贡献
 
-Please contribute! We will gladly review any pull requests.
-Make sure to read the [Contributing](CONTRIBUTING.md) page first though.
+请贡献！我们将乐于审核任何拉取请求。在此之前，请务必先阅读[贡献](CONTRIBUTING.md)页面。
 
-> Note: make sure to run `./gradlew --init-script gradle/spotless-init.gradle.kts spotlessApply` before 
-> submitting PRs.
+> 注意：在提交拉取请求之前，请确保运行 `./gradlew --init-script gradle/spotless-init.gradle.kts spotlessApply`。
 
-## License
+## 许可证
 
 ```
-Copyright 2023 The Android Open Source Project
+版权所有 2023 The Android Open Source Project
  
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+根据 Apache 许可证 2.0 版（“许可证”）授权，除非遵守许可证，否则你不得使用此文件。你可以在以下网址获得许可证副本：
 
     https://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+除非适用法律要求或书面同意，按许可证分发的软件按“原样”分发，不附带任何明示或暗示的担保或条件。请参阅许可证了解管理权限和限制的具体语言。
 ```

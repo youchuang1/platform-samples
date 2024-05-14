@@ -1,63 +1,34 @@
-# Google Open Source Community Guidelines
+# Google 开源社区指南
 
-At Google, we recognize and celebrate the creativity and collaboration of open
-source contributors and the diversity of skills, experiences, cultures, and
-opinions they bring to the projects and communities they participate in.
+在 Google，我们认可并庆祝开源贡献者的创造力和合作精神，以及他们带给项目和社区的技能、经验、文化和观点的多样性。
 
-Every one of Google's open source projects and communities are inclusive
-environments, based on treating all individuals respectfully, regardless of
-gender identity and expression, sexual orientation, disabilities,
-neurodiversity, physical appearance, body size, ethnicity, nationality, race,
-age, religion, or similar personal characteristic.
+Google 的每一个开源项目和社区都是包容性的环境，基于对所有个体的尊重，无论其性别认同和表达、性取向、残疾、神经多样性、外貌、体型、种族、国籍、种族、年龄、宗教或类似的个人特征如何。
 
-We value diverse opinions, but we value respectful behavior more.
+我们重视多样的意见，但我们更重视尊重的行为。
 
-Respectful behavior includes:
+尊重的行为包括：
 
-* Being considerate, kind, constructive, and helpful.
-* Not engaging in demeaning, discriminatory, harassing, hateful, sexualized, or
-  physically threatening behavior, speech, and imagery.
-* Not engaging in unwanted physical contact.
+- 考虑周到、友善、建设性和乐于助人。
+- 不参与贬低、歧视、骚扰、仇恨、性化或身体威胁的行为、言论和图像。
+- 不进行不必要的身体接触。
 
-Some Google open source projects [may adopt][] an explicit project code of
-conduct, which may have additional detailed expectations for participants. Most
-of those projects will use our [modified Contributor Covenant][].
+一些 Google 开源项目[可能采用][]明确的项目行为准则，这些准则可能对参与者有额外的详细期望。这些项目大多数将使用我们的[修改版贡献者公约][]。
 
-[may adopt]: https://opensource.google/docs/releasing/preparing/#conduct
-[modified Contributor Covenant]: https://opensource.google/docs/releasing/template/CODE_OF_CONDUCT/
+[可能采用]: https://opensource.google/docs/releasing/preparing/#conduct
+[修改版贡献者公约]: https://opensource.google/docs/releasing/template/CODE_OF_CONDUCT/
 
-## Resolve peacefully
+## 和平解决
 
-We do not believe that all conflict is necessarily bad; healthy debate and
-disagreement often yields positive results. However, it is never okay to be
-disrespectful.
+我们不认为所有冲突都是坏的；健康的辩论和分歧通常会带来积极的结果。然而，任何情况下不尊重都是不可以的。
 
-If you see someone behaving disrespectfully, you are encouraged to address the
-behavior directly with those involved. Many issues can be resolved quickly and
-easily, and this gives people more control over the outcome of their dispute.
-If you are unable to resolve the matter for any reason, or if the behavior is
-threatening or harassing, report it. We are dedicated to providing an
-environment where participants feel welcome and safe.
+如果你看到有人表现不尊重，鼓励你直接与相关人员解决该行为。许多问题可以快速轻松地解决，这使得人们对争议的结果有更多的控制。如果你由于任何原因无法解决问题，或者该行为具有威胁性或骚扰性，请报告。我们致力于提供一个让参与者感到受欢迎和安全的环境。
 
-## Reporting problems
+## 报告问题
 
-Some Google open source projects may adopt a project-specific code of conduct.
-In those cases, a Google employee will be identified as the Project Steward,
-who will receive and handle reports of code of conduct violations. In the event
-that a project hasn’t identified a Project Steward, you can report problems by
-emailing opensource@google.com.
+一些 Google 开源项目可能会采用项目特定的行为准则。在这些情况下，将指定一名 Google 员工作为项目负责人，负责接收和处理行为准则违规报告。如果项目未指定项目负责人，你可以通过发送电子邮件至 opensource@google.com 来报告问题。
 
-We will investigate every complaint, but you may not receive a direct response.
-We will use our discretion in determining when and how to follow up on reported
-incidents, which may range from not taking action to permanent expulsion from
-the project and project-sponsored spaces. We will notify the accused of the
-report and provide them an opportunity to discuss it before any action is
-taken. The identity of the reporter will be omitted from the details of the
-report supplied to the accused. In potentially harmful situations, such as
-ongoing harassment or threats to anyone's safety, we may take action without
-notice.
+我们将调查每一个投诉，但你可能不会收到直接回复。我们将自行决定何时以及如何跟进报告的事件，可能包括不采取行动到永久性驱逐出项目和项目赞助的空间。我们将通知被指控者报告，并在采取任何行动之前为他们提供讨论的机会。报告者的身份将在提供给被指控者的报告细节中省略。在潜在的有害情况下，例如持续的骚扰或对任何人安全的威胁，我们可能会在没有通知的情况下采取行动。
 
-*This document was adapted from the [IndieWeb Code of Conduct][] and can also
-be found at <https://opensource.google/conduct/>.*
+*本文档改编自 [IndieWeb 行为准则][]，也可以在 <https://opensource.google/conduct/> 找到。*
 
-[IndieWeb Code of Conduct]: https://indieweb.org/code-of-conduct
+[IndieWeb 行为准则]: https://indieweb.org/code-of-conduct

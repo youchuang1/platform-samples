@@ -2,6 +2,7 @@ package com.example.platform.location.currentLocation
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
@@ -57,22 +58,26 @@ fun CurrentLocationScreen() {
 )
 @Composable
 fun CurrentLocationContent(usePreciseLocation: Boolean) {
+    // rememberCoroutineScope 创建一个可以在当前组合范围内启动协程的作用域
     val scope = rememberCoroutineScope()
+    // 获取当前上下文
     val context = LocalContext.current
+    // 创建一个位置客户端，用于访问设备的位置信息
     val locationClient = remember {
         LocationServices.getFusedLocationProviderClient(context)
     }
+    // 使用 remember 和 mutableStateOf 存储位置信息，确保当位置信息更新时界面会重新组合
     var locationInfo by remember {
         mutableStateOf("")
     }
 
     Column(
         Modifier
-            .fillMaxWidth()
-            .animateContentSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .fillMaxWidth() // 设置列的宽度填充父容器的最大宽度
+            .animateContentSize() // 为列添加动画效果
+            .padding(16.dp), // 设置列的内边距
+        verticalArrangement = Arrangement.spacedBy(8.dp), // 垂直方向上子项之间的间隔
+        horizontalAlignment = Alignment.CenterHorizontally, // 子项在水平方向上居中对齐
     ) {
         Button(
             onClick = {
@@ -82,12 +87,18 @@ fun CurrentLocationContent(usePreciseLocation: Boolean) {
                 // 请处理位置为空的情况，并且在使用该方法之前可以添加额外的检查。
                 scope.launch(Dispatchers.IO) {
                     val result = locationClient.lastLocation.await()
+                    // 检查 result 是否为空，并更新位置信息
                     locationInfo = if (result == null) {
                         "没有已知的最后位置。请尝试首先获取当前位置"
                     } else {
                         "当前位置是\n" + "纬度 : ${result.latitude}\n" +
-                                "经度 : ${result.longitude}\n" + "获取时间 ${System.currentTimeMillis()}"
+                                "经度 : ${result.longitude}\n" + "获取时间 ${System.currentTimeMillis()}" +
+                                "\n水平精度 : ${result.accuracy}\n" + "自设备启动以来经过的时间 : ${result.elapsedRealtimeNanos}\n" +
+                                "海拔 : ${result.altitude}\n + vAcc ： ${result.verticalAccuracyMeters}\n" +
+                                "vel : ${result.speed}\n" +
+                                "sAcc : ${result.speedAccuracyMetersPerSecond}\n"
                     }
+                    Log.d("CurrentLocationScreen", "Last known location: $result")
                 }
             },
         ) {
@@ -98,27 +109,38 @@ fun CurrentLocationContent(usePreciseLocation: Boolean) {
             onClick = {
                 // 如果需要更精确或更新的设备位置，请使用此方法
                 scope.launch(Dispatchers.IO) {
+                    // 根据是否需要精确位置设置优先级
                     val priority = if (usePreciseLocation) {
                         Priority.PRIORITY_HIGH_ACCURACY
                     } else {
                         Priority.PRIORITY_BALANCED_POWER_ACCURACY
                     }
+                    // 获取当前位置，传入设定的优先级和取消令牌
                     val result = locationClient.getCurrentLocation(
                         priority,
                         CancellationTokenSource().token,
                     ).await()
+                    // 更新位置信息
                     result?.let { fetchedLocation ->
                         locationInfo =
                             "当前位置是\n" + "纬度 : ${fetchedLocation.latitude}\n" +
-                                    "经度 : ${fetchedLocation.longitude}\n" + "获取时间 ${System.currentTimeMillis()}"
+                                    "经度 : ${fetchedLocation.longitude}\n" + "获取时间 ${System.currentTimeMillis()}" +
+                                    "\n水平精度 : ${fetchedLocation.accuracy}\n" +
+                                    "自设备启动以来经过的时间 : ${fetchedLocation.elapsedRealtimeNanos}\n" +
+                                    "海拔 : ${fetchedLocation.altitude}\n + vAcc ： ${fetchedLocation.verticalAccuracyMeters}\n" +
+                                    "vel : ${fetchedLocation.speed}\n" +
+                                    "sAcc : ${fetchedLocation.speedAccuracyMetersPerSecond}\n"
                     }
+                    Log.d("CurrentLocationScreen", "Current location: $result")
                 }
             },
         ) {
             Text(text = "获取当前位置")
         }
+        // 显示位置信息
         Text(
             text = locationInfo,
         )
     }
 }
+

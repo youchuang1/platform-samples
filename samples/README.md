@@ -126,5 +126,7 @@ Demonstrates how to use the Jetpack WindowManager library.
 本示例展示获取位置权限的最佳实践
 - [位置 - 用户活动识别](C:\Users\admin\Desktop\platform-samples\samples\location\src\main\java\com\example\platform\location\useractivityrecog\UserActivityRecognitionScreen.kt):
 本示例展示如何检测用户活动，如行走、驾驶等。
+- [位置 - 获取周边商店](C:\Users\admin\Desktop\platform-samples\samples\location\src\main\java\com\example\platform\location\current\currentLocation.kt):
+本示例展示如何请求周边商店位置
 - [位置 - 获取当前位置](C:\Users\admin\Desktop\platform-samples\samples\location\src\main\java\com\example\platform\location\currentLocation\CurrentLocationScreen.kt):
 本示例展示如何请求当前位置
