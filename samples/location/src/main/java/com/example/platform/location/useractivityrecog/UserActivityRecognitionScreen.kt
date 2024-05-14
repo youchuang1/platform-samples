@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.useractivityrecog
 
 import android.Manifest
@@ -40,8 +24,8 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("MissingPermission")
 @Sample(
-    name = "Location - User Activity Recognition",
-    description = "This Sample demonstrate detection of user activity like walking, driving, etc.",
+    name = "位置 - 用户活动识别",
+    description = "本示例展示如何检测用户活动，如行走、驾驶等。",
     documentation = "https://developer.android.com/training/location/transitions",
 )
 @Composable
@@ -75,7 +59,7 @@ fun UserActivityRecognitionContent() {
         mutableStateOf("Unknown")
     }
 
-    // Calling deregister on dispose
+    // 确保在组件销毁时取消注册活动转换
     DisposableEffect(LocalLifecycleOwner.current) {
         onDispose {
             scope.launch(Dispatchers.IO) {
@@ -84,7 +68,7 @@ fun UserActivityRecognitionContent() {
         }
     }
 
-    // Register a local broadcast to receive activity transition updates
+    // 注册本地广播以接收活动转换更新
     UserActivityBroadcastReceiver(systemAction = CUSTOM_INTENT_USER_ACTION) { userActivity ->
         currentUserActivity = userActivity
     }
@@ -101,10 +85,9 @@ fun UserActivityRecognitionContent() {
                 scope.launch(Dispatchers.IO) {
                     manager.registerActivityTransitions()
                 }
-
             },
         ) {
-            Text(text = "Register for activity transition updates")
+            Text(text = "注册活动转换更新")
         }
         Button(
             onClick = {
@@ -114,11 +97,11 @@ fun UserActivityRecognitionContent() {
                 }
             },
         ) {
-            Text(text = "Deregister for activity transition updates")
+            Text(text = "取消注册活动转换更新")
         }
         if (currentUserActivity.isNotBlank()) {
             Text(
-                text = "CurrentActivity is = $currentUserActivity",
+                text = "当前活动为 = $currentUserActivity",
             )
         }
     }

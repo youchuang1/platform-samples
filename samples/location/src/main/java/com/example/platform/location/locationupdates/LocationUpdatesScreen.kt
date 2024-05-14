@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.locationupdates
 
 import android.Manifest
@@ -50,8 +34,8 @@ import java.util.concurrent.TimeUnit
 
 @SuppressLint("MissingPermission")
 @Sample(
-    name = "Location - Updates",
-    description = "This Sample demonstrate how to get location updates",
+    name = "位置 - 更新",
+    description = "本示例展示如何获取位置更新",
     documentation = "https://developer.android.com/training/location/request-updates",
 )
 @Composable
@@ -60,7 +44,7 @@ fun LocationUpdatesScreen() {
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION,
     )
-    // Requires at least coarse permission
+    // 至少需要粗略位置权限
     PermissionBox(
         permissions = permissions,
         requiredPermissions = listOf(permissions.first()),
@@ -76,19 +60,19 @@ fun LocationUpdatesScreen() {
 )
 @Composable
 fun LocationUpdatesContent(usePreciseLocation: Boolean) {
-    // The location request that defines the location updates
+    // 定义位置请求以定义位置更新的频率和精确度
     var locationRequest by remember {
         mutableStateOf<LocationRequest?>(null)
     }
-    // Keeps track of received location updates as text
+    // 用于跟踪接收到的位置更新
     var locationUpdates by remember {
         mutableStateOf("")
     }
 
-    // Only register the location updates effect when we have a request
+    // 当位置请求有效时，注册位置更新的效果
     if (locationRequest != null) {
         LocationUpdatesEffect(locationRequest!!) { result ->
-            // For each result update the text
+            // 更新显示的位置信息
             for (currentLocation in result.locations) {
                 locationUpdates = "${System.currentTimeMillis()}:\n" +
                         "- @lat: ${currentLocation.latitude}\n" +
@@ -107,18 +91,15 @@ fun LocationUpdatesContent(usePreciseLocation: Boolean) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            // Toggle to start and stop location updates
-            // before asking for periodic location updates,
-            // it's good practice to fetch the current location
-            // or get the last known location
+            // 开关按钮，用于开始和停止位置更新
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Enable location updates")
+                Text(text = "启用位置更新")
                 Spacer(modifier = Modifier.padding(8.dp))
                 Switch(
                     checked = locationRequest != null,
                     onCheckedChange = { checked ->
                         locationRequest = if (checked) {
-                            // Define the accuracy based on your needs and granted permissions
+                            // 根据需要和授予的权限确定精确度
                             val priority = if (usePreciseLocation) {
                                 Priority.PRIORITY_HIGH_ACCURACY
                             } else {
@@ -139,8 +120,7 @@ fun LocationUpdatesContent(usePreciseLocation: Boolean) {
 }
 
 /**
- * An effect that request location updates based on the provided request and ensures that the
- * updates are added and removed whenever the composable enters or exists the composition.
+ * 一个效果，根据提供的请求请求位置更新，并确保当组件进入或退出组合时添加和移除更新。
  */
 @RequiresPermission(
     anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION],
@@ -154,7 +134,7 @@ fun LocationUpdatesEffect(
     val context = LocalContext.current
     val currentOnUpdate by rememberUpdatedState(newValue = onUpdate)
 
-    // Whenever on of these parameters changes, dispose and restart the effect.
+    // 参数更改时重新启动效果
     DisposableEffect(locationRequest, lifecycleOwner) {
         val locationClient = LocationServices.getFusedLocationProviderClient(context)
         val locationCallback: LocationCallback = object : LocationCallback() {
@@ -172,10 +152,10 @@ fun LocationUpdatesEffect(
             }
         }
 
-        // Add the observer to the lifecycle
+        // 将观察者添加到生命周期
         lifecycleOwner.lifecycle.addObserver(observer)
 
-        // When the effect leaves the Composition, remove the observer
+        // 组合离开时，移除观察者
         onDispose {
             locationClient.removeLocationUpdates(locationCallback)
             lifecycleOwner.lifecycle.removeObserver(observer)

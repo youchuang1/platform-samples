@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.geofencing
 
 import android.annotation.SuppressLint
@@ -33,10 +17,11 @@ import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.tasks.await
 
 class GeofenceManager(context: Context) {
-    private val TAG = "GeofenceManager"
-    private val client = LocationServices.getGeofencingClient(context)
-    val geofenceList = mutableMapOf<String, Geofence>()
+    private val TAG = "GeofenceManager"  // 日志标签
+    private val client = LocationServices.getGeofencingClient(context)  // 地理围栏客户端
+    val geofenceList = mutableMapOf<String, Geofence>()  // 保存地理围栏的列表
 
+    // 创建 Pending Intent 用于触发地理围栏事件
     private val geofencingPendingIntent by lazy {
         PendingIntent.getBroadcast(
             context,
@@ -50,19 +35,22 @@ class GeofenceManager(context: Context) {
         )
     }
 
+    // 添加地理围栏
     fun addGeofence(
         key: String,
         location: Location,
         radiusInMeters: Float = 100.0f,
-        expirationTimeInMillis: Long = 30 * 60 * 1000,
+        expirationTimeInMillis: Long = 30 * 60 * 1000,  // 30分钟
     ) {
         geofenceList[key] = createGeofence(key, location, radiusInMeters, expirationTimeInMillis)
     }
 
+    // 移除地理围栏
     fun removeGeofence(key: String) {
         geofenceList.remove(key)
     }
 
+    // 注册地理围栏
     @SuppressLint("MissingPermission")
     fun registerGeofence() {
         client.addGeofences(createGeofencingRequest(), geofencingPendingIntent)
@@ -73,18 +61,21 @@ class GeofenceManager(context: Context) {
             }
     }
 
+    // 注销地理围栏
     suspend fun deregisterGeofence() = kotlin.runCatching {
         client.removeGeofences(geofencingPendingIntent).await()
         geofenceList.clear()
     }
 
+    // 创建地理围栏请求
     private fun createGeofencingRequest(): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
-            setInitialTrigger(GEOFENCE_TRANSITION_ENTER)
+            setInitialTrigger(GEOFENCE_TRANSITION_ENTER)  // 设置初始触发条件为进入
             addGeofences(geofenceList.values.toList())
         }.build()
     }
 
+    // 创建单个地理围栏
     private fun createGeofence(
         key: String,
         location: Location,
@@ -92,10 +83,10 @@ class GeofenceManager(context: Context) {
         expirationTimeInMillis: Long,
     ): Geofence {
         return Geofence.Builder()
-            .setRequestId(key)
-            .setCircularRegion(location.latitude, location.longitude, radiusInMeters)
-            .setExpirationDuration(expirationTimeInMillis)
-            .setTransitionTypes(GEOFENCE_TRANSITION_ENTER or GEOFENCE_TRANSITION_EXIT)
+            .setRequestId(key)  // 设置请求 ID
+            .setCircularRegion(location.latitude, location.longitude, radiusInMeters)  // 设置圆形区域
+            .setExpirationDuration(expirationTimeInMillis)  // 设置过期时间
+            .setTransitionTypes(GEOFENCE_TRANSITION_ENTER or GEOFENCE_TRANSITION_EXIT)  // 设置触发条件（进入或退出）
             .build()
     }
 

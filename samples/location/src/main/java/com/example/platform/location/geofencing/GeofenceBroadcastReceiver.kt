@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.geofencing
 
 import android.content.BroadcastReceiver
@@ -34,35 +18,35 @@ fun GeofenceBroadcastReceiver(
     systemAction: String,
     systemEvent: (userActivity: String) -> Unit,
 ) {
-    val TAG = "GeofenceReceiver"
-    val context = LocalContext.current
-    val currentSystemOnEvent by rememberUpdatedState(systemEvent)
+    val TAG = "GeofenceReceiver"  // 定义日志标签
+    val context = LocalContext.current  // 获取当前 Compose 上下文
+    val currentSystemOnEvent by rememberUpdatedState(systemEvent)  // 使用 rememberUpdatedState 来确保事件处理始终是最新的
 
-    DisposableEffect(context, systemAction) {
-        val intentFilter = IntentFilter(systemAction)
-        val broadcast = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val geofencingEvent = intent?.let { GeofencingEvent.fromIntent(it) } ?: return
+    DisposableEffect(context, systemAction) {  // 使用 DisposableEffect 来管理资源的生命周期
+        val intentFilter = IntentFilter(systemAction)  // 创建意图过滤器，用于监听指定的系统动作
+        val broadcast = object : BroadcastReceiver() {  // 定义广播接收器
+            override fun onReceive(context: Context?, intent: Intent?) {  // 处理接收到的广播
+                val geofencingEvent = intent?.let { GeofencingEvent.fromIntent(it) } ?: return  // 从意图中获取地理围栏事件
 
-                if (geofencingEvent.hasError()) {
+                if (geofencingEvent.hasError()) {  // 检查地理围栏事件是否有错误
                     val errorMessage =
-                        GeofenceStatusCodes.getStatusCodeString(geofencingEvent.errorCode)
-                    Log.e(TAG, "onReceive: $errorMessage")
+                        GeofenceStatusCodes.getStatusCodeString(geofencingEvent.errorCode)  // 获取错误消息
+                    Log.e(TAG, "onReceive: $errorMessage")  // 记录错误
                     return
                 }
-                val alertString = "Geofence Alert :" +
-                        " Trigger ${geofencingEvent.triggeringGeofences}" +
-                        " Transition ${geofencingEvent.geofenceTransition}"
+                val alertString = "地理围栏警报 :" +
+                        " 触发 ${geofencingEvent.triggeringGeofences}" +
+                        " 过渡 ${geofencingEvent.geofenceTransition}"
                 Log.d(
                     TAG,
                     alertString
                 )
-                currentSystemOnEvent(alertString)
+                currentSystemOnEvent(alertString)  // 处理地理围栏警报事件
             }
         }
-        context.registerReceiver(broadcast, intentFilter)
+        context.registerReceiver(broadcast, intentFilter)  // 注册广播接收器
         onDispose {
-            context.unregisterReceiver(broadcast)
+            context.unregisterReceiver(broadcast)  // 注销广播接收器
         }
     }
 }

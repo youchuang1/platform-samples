@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.currentLocation
 
 import android.Manifest
@@ -47,8 +31,8 @@ import kotlinx.coroutines.tasks.await
 
 @SuppressLint("MissingPermission")
 @Sample(
-    name = "Location - Getting Current Location",
-    description = "This Sample demonstrate how to request of current location",
+    name = "位置 - 获取当前位置",
+    description = "本示例展示如何请求当前位置",
     documentation = "https://developer.android.com/training/location/retrieve-current",
 )
 @Composable
@@ -92,28 +76,27 @@ fun CurrentLocationContent(usePreciseLocation: Boolean) {
     ) {
         Button(
             onClick = {
-                // getting last known location is faster and minimizes battery usage
-                // This information may be out of date.
-                // Location may be null as previously no client has access location
-                // or location turned of in device setting.
-                // Please handle for null case as well as additional check can be added before using the method
+                // 获取最后已知位置较快并且可以节省电池使用，但这些信息可能是过时的。
+                // 位置可能为空，因为之前没有客户端访问过位置信息，
+                // 或者设备设置中关闭了位置信息。
+                // 请处理位置为空的情况，并且在使用该方法之前可以添加额外的检查。
                 scope.launch(Dispatchers.IO) {
                     val result = locationClient.lastLocation.await()
                     locationInfo = if (result == null) {
-                        "No last known location. Try fetching the current location first"
+                        "没有已知的最后位置。请尝试首先获取当前位置"
                     } else {
-                        "Current location is \n" + "lat : ${result.latitude}\n" +
-                                "long : ${result.longitude}\n" + "fetched at ${System.currentTimeMillis()}"
+                        "当前位置是\n" + "纬度 : ${result.latitude}\n" +
+                                "经度 : ${result.longitude}\n" + "获取时间 ${System.currentTimeMillis()}"
                     }
                 }
             },
         ) {
-            Text("Get last known location")
+            Text("获取最后已知位置")
         }
 
         Button(
             onClick = {
-                //To get more accurate or fresher device location use this method
+                // 如果需要更精确或更新的设备位置，请使用此方法
                 scope.launch(Dispatchers.IO) {
                     val priority = if (usePreciseLocation) {
                         Priority.PRIORITY_HIGH_ACCURACY
@@ -126,13 +109,13 @@ fun CurrentLocationContent(usePreciseLocation: Boolean) {
                     ).await()
                     result?.let { fetchedLocation ->
                         locationInfo =
-                            "Current location is \n" + "lat : ${fetchedLocation.latitude}\n" +
-                                    "long : ${fetchedLocation.longitude}\n" + "fetched at ${System.currentTimeMillis()}"
+                            "当前位置是\n" + "纬度 : ${fetchedLocation.latitude}\n" +
+                                    "经度 : ${fetchedLocation.longitude}\n" + "获取时间 ${System.currentTimeMillis()}"
                     }
                 }
             },
         ) {
-            Text(text = "Get current location")
+            Text(text = "获取当前位置")
         }
         Text(
             text = locationInfo,

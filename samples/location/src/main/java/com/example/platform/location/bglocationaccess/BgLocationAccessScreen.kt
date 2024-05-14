@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.bglocationaccess
 
 import android.Manifest
@@ -41,8 +25,8 @@ import java.util.concurrent.TimeUnit
 
 
 @Sample(
-    name = "Location - Background Location updates",
-    description = "This Sample demonstrate how to access location and get location updates when app is in background",
+    name = "位置 - 后台位置更新",
+    description = "此示例演示如何在应用位于后台时访问位置并获取位置更新",
     documentation = "https://developer.android.com/training/location/background",
 )
 @Composable
@@ -84,16 +68,16 @@ private fun BackgroundLocationControls() {
         val enqueued = workerState?.find { !it.state.isFinished } != null
         if (enqueued) {
             ControlsState(
-                text = "Check the logcat for location updates every 15 min",
-                action = "Disable updates",
+                text = "每 15 分钟检查一次 logcat 以获取位置更新",
+                action = "禁用更新",
                 onClick = {
                     workManager.cancelUniqueWork(BgLocationWorker.workName)
                 },
             )
         } else {
             ControlsState(
-                text = "Enable location updates and bring the app in the background.",
-                action = "Enable updates",
+                text = "启用位置更新并将应用置于后台。",
+                action = "启用更新",
                 onClick = {
                     // Schedule a periodic worker to check for location every 15 min
                     workManager.enqueueUniquePeriodicWork(

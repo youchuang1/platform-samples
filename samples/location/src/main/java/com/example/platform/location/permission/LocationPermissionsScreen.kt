@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.permission
 
 import android.Manifest
@@ -51,8 +35,8 @@ import com.google.android.catalog.framework.annotations.Sample
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Sample(
-    name = "Location - Permissions",
-    description = "This Sample demonstrate best practices for Location Permission",
+    name = "位置 - 权限",
+    description = "本示例展示获取位置权限的最佳实践",
     documentation = "https://developer.android.com/training/location/permissions",
     tags = ["permissions"],
 )
@@ -61,25 +45,24 @@ import com.google.android.catalog.framework.annotations.Sample
 fun LocationPermissionScreen() {
     val context = LocalContext.current
 
-    // Approximate location access is sufficient for most of use cases 
+    // 通常情况下，粗略位置权限已足够使用
     val locationPermissionState = rememberPermissionState(
         Manifest.permission.ACCESS_COARSE_LOCATION,
     )
 
-    // When precision is important request both permissions but make sure to handle the case where
-    // the user only grants ACCESS_COARSE_LOCATION
+    // 当精确位置很重要时，请求两个权限，但需处理用户只授权粗略位置的情况
     val fineLocationPermissionState = rememberMultiplePermissionsState(
         listOf(
             Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
         ),
     )
 
-    // In really rare use cases, accessing background location might be needed.
+    // 在极少数情况下，可能需要访问后台位置
     val bgLocationPermissionState = rememberPermissionState(
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
     )
 
-    // Keeps track of the rationale dialog state, needed when the user requires further rationale
+    // 跟踪权限请求的解释对话框状态
     var rationaleState by remember {
         mutableStateOf<RationaleState?>(null)
     }
@@ -95,17 +78,17 @@ fun LocationPermissionScreen() {
                 .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // Show rationale dialog when needed
+            // 当需要时显示解释对话框
             rationaleState?.run { PermissionRationaleDialog(rationaleState = this) }
 
             PermissionRequestButton(
                 isGranted = locationPermissionState.status.isGranted,
-                title = "Approximate location access",
+                title = "粗略位置访问权限",
             ) {
                 if (locationPermissionState.status.shouldShowRationale) {
                     rationaleState = RationaleState(
-                        "Request approximate location access",
-                        "In order to use this feature please grant access by accepting " + "the location permission dialog." + "\n\nWould you like to continue?",
+                        "请求粗略位置访问权限",
+                        "为使用此功能，请授予位置权限对话框的访问权限。\n\n您想继续吗？",
                     ) { proceed ->
                         if (proceed) {
                             locationPermissionState.launchPermissionRequest()
@@ -119,12 +102,12 @@ fun LocationPermissionScreen() {
 
             PermissionRequestButton(
                 isGranted = fineLocationPermissionState.allPermissionsGranted,
-                title = "Precise location access",
+                title = "精确位置访问权限",
             ) {
                 if (fineLocationPermissionState.shouldShowRationale) {
                     rationaleState = RationaleState(
-                        "Request Precise Location",
-                        "In order to use this feature please grant access by accepting " + "the location permission dialog." + "\n\nWould you like to continue?",
+                        "请求精确位置",
+                        "为使用此功能，请授予位置权限对话框的访问权限。\n\n您想继续吗？",
                     ) { proceed ->
                         if (proceed) {
                             fineLocationPermissionState.launchMultiplePermissionRequest()
@@ -136,19 +119,17 @@ fun LocationPermissionScreen() {
                 }
             }
 
-            // Background location permission needed from Android Q,
-            // before Android Q, granting Fine or Coarse location access automatically grants Background
-            // location access
+            // 从 Android Q 开始，背景位置访问需要单独的权限
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 PermissionRequestButton(
                     isGranted = bgLocationPermissionState.status.isGranted,
-                    title = "Background location access",
+                    title = "后台位置访问权限",
                 ) {
                     if (locationPermissionState.status.isGranted || fineLocationPermissionState.allPermissionsGranted) {
                         if (bgLocationPermissionState.status.shouldShowRationale) {
                             rationaleState = RationaleState(
-                                "Request background location",
-                                "In order to use this feature please grant access by accepting " + "the background location permission dialog." + "\n\nWould you like to continue?",
+                                "请求后台位置",
+                                "为使用此功能，请授予后台位置权限对话框的访问权限。\n\n您想继续吗？",
                             ) { proceed ->
                                 if (proceed) {
                                     bgLocationPermissionState.launchPermissionRequest()
@@ -161,7 +142,7 @@ fun LocationPermissionScreen() {
                     } else {
                         Toast.makeText(
                             context,
-                            "Please grant either Approximate location access permission or Fine" + "location access permission",
+                            "请先授权粗略或精确位置访问权限",
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
@@ -172,7 +153,7 @@ fun LocationPermissionScreen() {
             modifier = Modifier.align(Alignment.BottomEnd),
             onClick = { context.startActivity(Intent(ACTION_LOCATION_SOURCE_SETTINGS)) },
         ) {
-            Icon(Icons.Outlined.Settings, "Location Settings")
+            Icon(Icons.Outlined.Settings, "位置设置")
         }
     }
 }

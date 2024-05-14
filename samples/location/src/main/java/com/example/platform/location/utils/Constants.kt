@@ -1,25 +1,15 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.utils
 
-//constants used for locations samples
+// 用于位置示例的常量定义
 
 const val CUSTOM_INTENT_USER_ACTION = "USER-ACTIVITY-DETECTION-INTENT-ACTION"
+// 自定义的 Intent 动作，用于用户活动识别广播接收器的过滤器
+
 const val CUSTOM_REQUEST_CODE_USER_ACTION = 1000
+// 用户活动识别请求代码，用于区分不同的 PendingIntent 请求
 
 const val CUSTOM_INTENT_GEOFENCE = "GEOFENCE-TRANSITION-INTENT-ACTION"
+// 自定义的 Intent 动作，用于地理围栏转换事件的广播接收器过滤器
+
 const val CUSTOM_REQUEST_CODE_GEOFENCE = 1001
+// 地理围栏转换请求代码，用于区分不同的 PendingIntent 请求

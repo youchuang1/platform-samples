@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.geofencing
 
 import android.Manifest
@@ -50,11 +34,10 @@ import com.google.android.catalog.framework.annotations.Sample
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 @SuppressLint("InlinedApi")
 @Sample(
-    name = "Location - Create and monitor Geofence",
-    description = "This Sample demonstrate best practices for Creating and monitoring geofence",
+    name = "位置 - 创建和监控地理围栏",
+    description = "本示例展示创建和监控地理围栏的最佳实践",
     documentation = "https://developer.android.com/training/location/geofencing",
 )
 @Composable
@@ -63,12 +46,12 @@ fun GeofencingScreen() {
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION,
     )
-    // Requires at least coarse permission
+    // 至少需要粗略位置权限
     PermissionBox(
         permissions = permissions,
         requiredPermissions = listOf(permissions.first()),
     ) {
-        // For Android 10 onwards, we need background permission
+        // 从 Android 10 开始，需要后台位置权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             PermissionBox(
                 permissions = listOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
@@ -90,6 +73,7 @@ private fun GeofencingControls() {
         mutableStateOf("")
     }
 
+    // 注册和解注册地理围栏使用的 DisposableEffect
     DisposableEffect(LocalLifecycleOwner.current) {
         onDispose {
             scope.launch(Dispatchers.IO) {
@@ -98,7 +82,7 @@ private fun GeofencingControls() {
         }
     }
 
-    // Register a local broadcast to receive activity transition updates
+    // 注册本地广播接收地理围栏的活动转换更新
     GeofenceBroadcastReceiver(systemAction = CUSTOM_INTENT_GEOFENCE) { event ->
         geofenceTransitionEventInfo = event
     }
@@ -118,13 +102,13 @@ private fun GeofencingControls() {
                 } else {
                     Toast.makeText(
                         context,
-                        "Please add at least one geofence to monitor",
+                        "请至少添加一个地理围栏以进行监控",
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
             },
         ) {
-            Text(text = "Register Geofences")
+            Text(text = "注册地理围栏")
         }
 
         Button(
@@ -134,7 +118,7 @@ private fun GeofencingControls() {
                 }
             },
         ) {
-            Text(text = "Deregister Geofences")
+            Text(text = "解注册地理围栏")
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = geofenceTransitionEventInfo)
@@ -143,12 +127,12 @@ private fun GeofencingControls() {
 
 @Composable
 fun GeofenceList(geofenceManager: GeofenceManager) {
-    // for geofences
+    // 管理地理围栏的复选框状态
     val checkedGeoFence1 = remember { mutableStateOf(false) }
     val checkedGeoFence2 = remember { mutableStateOf(false) }
     val checkedGeoFence3 = remember { mutableStateOf(false) }
 
-    Text(text = "Available Geofence")
+    Text(text = "可用的地理围栏")
     Row(
         Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -169,7 +153,7 @@ fun GeofenceList(geofenceManager: GeofenceManager) {
                 checkedGeoFence1.value = checked
             },
         )
-        Text(text = "Statue of Liberty")
+        Text(text = "自由女神像")
     }
     Row(
         Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically,
@@ -191,7 +175,7 @@ fun GeofenceList(geofenceManager: GeofenceManager) {
                 checkedGeoFence2.value = checked
             },
         )
-        Text(text = "Eiffel Tower")
+        Text(text = "艾菲尔铁塔")
     }
     Row(
         Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically,
@@ -213,6 +197,6 @@ fun GeofenceList(geofenceManager: GeofenceManager) {
                 checkedGeoFence3.value = checked
             },
         )
-        Text(text = "Vatican City")
+        Text(text = "梵蒂冈城")
     }
 }

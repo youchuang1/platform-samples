@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.bglocationaccess
 
 import android.Manifest
@@ -27,27 +11,33 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 
+// 用于后台位置更新的 Worker 类
 class BgLocationWorker(context: Context, param: WorkerParameters) :
     CoroutineWorker(context, param) {
     companion object {
-        // unique name for the work
+        // 工作的唯一名称
         val workName = "BgLocationWorker"
         private const val TAG = "BackgroundLocationWork"
     }
 
     private val locationClient = LocationServices.getFusedLocationProviderClient(context)
 
+    // 重写 doWork 方法以执行后台位置获取任务
     override suspend fun doWork(): Result {
+        // 检查定位权限
         if (ActivityCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            // 如果没有权限，返回失败结果
             return Result.failure()
         }
+        // 请求当前位置信息
         locationClient.getCurrentLocation(
             Priority.PRIORITY_BALANCED_POWER_ACCURACY, CancellationTokenSource().token,
         ).addOnSuccessListener { location ->
+            // 当成功获取位置时打印位置数据
             location?.let {
                 Log.d(
                     TAG,
@@ -55,6 +45,7 @@ class BgLocationWorker(context: Context, param: WorkerParameters) :
                 )
             }
         }
+        // 如果任务顺利执行完成，返回成功结果
         return Result.success()
     }
 }

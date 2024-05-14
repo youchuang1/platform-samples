@@ -1,19 +1,3 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.platform.location.useractivityrecog
 
 import android.Manifest
@@ -34,6 +18,7 @@ import kotlinx.coroutines.tasks.await
 class UserActivityTransitionManager(context: Context) {
 
     companion object {
+        // 根据活动类型的整数值返回相应的字符串描述
         fun getActivityType(int: Int): String {
             return when (int) {
                 0 -> "IN_VEHICLE"
@@ -48,6 +33,7 @@ class UserActivityTransitionManager(context: Context) {
             }
         }
 
+        // 根据转换类型的整数值返回相应的字符串描述
         fun getTransitionType(int: Int): String {
             return when (int) {
                 0 -> "STARTED"
@@ -57,7 +43,7 @@ class UserActivityTransitionManager(context: Context) {
         }
     }
 
-    // list of activity transitions to be monitored
+    // 初始化要监控的活动转换列表
     private val activityTransitions: List<ActivityTransition> by lazy {
         listOf(
             getUserActivity(
@@ -87,7 +73,7 @@ class UserActivityTransitionManager(context: Context) {
         )
     }
 
-    private val activityClient = ActivityRecognition.getClient(context)
+    private val activityClient = ActivityRecognition.getClient(context) // 获取 ActivityRecognition 的客户端实例
 
     private val pendingIntent by lazy {
         PendingIntent.getBroadcast(
@@ -102,12 +88,13 @@ class UserActivityTransitionManager(context: Context) {
         )
     }
 
+    // 构建活动转换对象
     private fun getUserActivity(detectedActivity: Int, transitionType: Int): ActivityTransition {
         return ActivityTransition.Builder().setActivityType(detectedActivity)
             .setActivityTransition(transitionType).build()
-
     }
 
+    // 注册活动转换更新
     @SuppressLint("InlinedApi")
     @RequiresPermission(
         anyOf = [
@@ -117,12 +104,11 @@ class UserActivityTransitionManager(context: Context) {
     )
     suspend fun registerActivityTransitions() = kotlin.runCatching {
         activityClient.requestActivityTransitionUpdates(
-            ActivityTransitionRequest(
-                activityTransitions
-            ), pendingIntent
+            ActivityTransitionRequest(activityTransitions), pendingIntent
         ).await()
     }
 
+    // 注销活动转换更新
     @SuppressLint("InlinedApi")
     @RequiresPermission(
         anyOf = [
@@ -134,4 +120,3 @@ class UserActivityTransitionManager(context: Context) {
         activityClient.removeActivityUpdates(pendingIntent).await()
     }
 }
-
